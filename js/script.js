@@ -41,13 +41,20 @@ document.addEventListener('DOMContentLoaded', () => {
         movieDB.movies = movieDB.movies.map(str => str.toLowerCase());
     }
     const moviesForSort = toLowCase();
+    
+    const advDel = (arr) => {
+        arr.forEach(item => {
+            item.remove();
+        });
+    };
+    advDel(promoAdv);
 
-    promoAdv.forEach(item => {
-        item.remove();
-    });
-
-    promoGenre.textContent = 'Драма';
-    promoBG.style.backgroundImage = 'url("img/bg.jpg")';
+    const changes = () => {
+        promoGenre.textContent = 'Драма';
+        promoBG.style.backgroundImage = 'url("img/bg.jpg")';
+    };
+    changes();
+    
 
     //Сортировка фильмов в списке
     function movieSort () {
@@ -65,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Добавление фильмов по нажатию на кнопку
     btn.addEventListener('click', (event,) => {
+        event.preventDefault();
         const inp = addInput.value;
 
         if (inp.length === 0) {
@@ -88,4 +96,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
