@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
           promoBG = document.querySelector('.promo__bg'),
           promoGenre = promoBG.querySelector('.promo__genre'),
           promoListMov = document.querySelector('.promo__interactive-list'),
-          addInput = document.querySelector('.adding__input');
+          addInput = document.querySelector('.adding__input'),
+          addCheckbox = document.getElementById('checkbox');
 
     //Объект
     const movieDB = {
@@ -34,13 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
             "Ла-ла лэнд",
             "Одержимость",
             "Скотт Пилигрим против...",
+            "ла",
         ],
     };
-
-    function toLowCase() {
-        movieDB.movies = movieDB.movies.map(str => str.toLowerCase());
-    }
-    const moviesForSort = toLowCase();
     
     const advDel = (arr) => {
         arr.forEach(item => {
@@ -55,25 +52,41 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     changes();
     
+    const sortMovie = () => {
+        movieDB.movies.sort();
+    };
+
+    function movieSort (films) {
+        movieDB.movies = films.map(str => str.toLowerCase());
+        sortMovie();
+    }
+    movieSort(movieDB.movies);
 
     //Сортировка фильмов в списке
-    function movieSort () {
-        promoListMov.innerHTML = "";
-        movieDB.movies.sort();
-        movieDB.movies.forEach ((film, i) => {
-            promoListMov.innerHTML += `
+    function createMovieList(films, parent) {
+        parent.innerHTML = "";
+        films.forEach ((film, i) => {
+            parent.innerHTML += `
                 <li class="promo__interactive-item">${i + 1}. ${film}
                     <div class="delete"></div>
                 </li>
             `;
         });
+        console.log(movieDB.movies);
     }
-    movieSort();
+    createMovieList(movieDB.movies, promoListMov);
+
 
     //Добавление фильмов по нажатию на кнопку
-    btn.addEventListener('click', (event,) => {
+    btn.addEventListener('click', (event) => {
         event.preventDefault();
+        
         const inp = addInput.value;
+        const checkbox = addCheckbox.checked;
+        
+        if (checkbox.checked) {
+            console.log("Добавляем любимый фильм");
+        }
 
         if (inp.length === 0) {
             alert("Пожалуйста, укажите фильм");
@@ -83,16 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
             movieDB.movies.push(inp.toLowerCase());
         }
 
-        movieSort();
+        movieSort(movieDB.movies);
+        createMovieList(movieDB.movies, promoListMov);
         document.querySelector('.adding__input').value = '';
         });
-
-    const checkbox = document.getElementById('checkbox');
-
-    //Любимый фильм, чекбокс
-    checkbox.addEventListener('change', () => {
-        if (checkbox.checked) {
-            console.log("Добавляем любимый фильм");
-        }
-    });
 });
