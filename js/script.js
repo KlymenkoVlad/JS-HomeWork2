@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
           addForm = document.querySelector('.add'),
           addInput = document.querySelector('.adding__input'),
           addCheckbox = document.getElementById('checkbox');
+        //addCheckbox = document.getElementById('[type="checkbox"]');
 
     //Объект
     const movieDB = {
